@@ -10,7 +10,8 @@
 <body>
     <header>
         <nav>
-            <a href="{% url 'catalogue:topic-list' %}">InsightHub</a>
+            <a href="{% url 'core:home' %}">InsightHub</a>
+            <a href="{% url 'catalogue:topic-list' %}">Topics</a>
         </nav>
     </header>
 
@@ -18,5 +19,9 @@
         {% block content %}
         {% endblock %}
     </main>
+
+    <footer>
+        <p>&copy; {%  now "Y" %} InsightHub</p>
+    </footer>
 </body>
 </html>
