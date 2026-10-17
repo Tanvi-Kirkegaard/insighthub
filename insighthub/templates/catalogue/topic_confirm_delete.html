@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delete Topic | InsightHub
+{% endblock %}
+
+{% block content %}
+    <h1>Delete Topic</h1>
+    <p>
+        Are you sure you want to delete "{{ topic.title }}"?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete Topic</button>
+    </form>
+
+    <a href="{% url 'catalogue:topic-detail' topic.pk %}">
+        Cancel
+    </a>
+
+{% endblock %}

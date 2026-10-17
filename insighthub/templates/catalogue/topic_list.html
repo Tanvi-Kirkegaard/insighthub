@@ -4,10 +4,18 @@
 
 {% block content %}
     <h1>Topics</h1>
-    
+
+    <a href="{% url 'catalogue:topic-create' %}">
+        Create Topic
+    </a>
+
     {% for topic in topics %}
         <article>
-            <h2>{{ topic.title }}</h2>
+            <h2>
+                <a href="{% url 'catalogue:topic-detail' topic.pk %}">
+                    {{ topic.title }}
+                </a>
+            </h2>
             <p>{{ topic.description }}</p>
         </article>
     {% empty %}

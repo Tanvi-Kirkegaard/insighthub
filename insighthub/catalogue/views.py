@@ -1,14 +1,32 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Topic
-from django.http import HttpRequest, HttpResponse
+from .forms import TopicForm
+from django.urls import reverse_lazy
 
-# Views created here:
+class TopicListView(ListView):
+    """Display the topics in the catalogue as a list."""
+    model = Topic
+    template_name = "catalogue/topic_list.html"
+    context_object_name = "topics"
 
-def topic_list(request: HttpRequest) -> HttpResponse:
-    """ Display all topics in the catalogue."""
-    topics = Topic.objects.all()
-    context = {
-        'topics': topics,
-    }
-    return render(request, 'catalogue/topic_list.html', context)
+class TopicDetailView(DetailView):
+    """Display the details of a single topic."""
+    model = Topic
+    template_name = "catalogue/topic_detail.html"
+    context_object_name = "topic"
 
+class TopicCreateView(CreateView):
+    form_class = TopicForm
+    template_name = "catalogue/topic_form.html"
+    success_url = reverse_lazy("catalogue:topic-list")
+
+class TopicUpdateView(UpdateView):
+    model = Topic
+    form_class = TopicForm
+    template_name = "catalogue/topic_form.html"
+    success_url = reverse_lazy("catalogue:topic-list")
+
+class TopicDeleteView(DeleteView):
+    model = Topic
+    template_name = "catalogue/topic_confirm_delete.html"
+    success_url = reverse_lazy("catalogue:topic-list")

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ topic.name }} | InsightHub{% endblock %}
+
+{% block content %}
+    <article>
+        <h1>{{ topic.title }}</h1>
+        <p>{{ topic.description }}</p>
+        <p>Created: {{ topic.created_at }}</p>
+    </article>
+
+    <a href="{% url 'catalogue:topic-update' topic.pk %}">
+        Edit Topic
+    </a>
+
+    <a href="{% url 'catalogue:topic-delete' topic.pk %}">
+        Delete Topic
+    </a>
+
+    <a href="{% url 'catalogue:topic-list' %}">
+        Back to topics
+    </a>
+{% endblock %}

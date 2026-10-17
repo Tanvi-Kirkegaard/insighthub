@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if object %}Edit Topic{% else %}Create Topic{% endif %} | InsightHub
+{% endblock %}
+
+{% block content %}
+    {% if object %}
+        <h1>Edit Topic</h1>
+    {% else %}
+        <h1>Create Topic</h1>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">
+            {% if object %}Save changes{% else %}Create topic{% endif %}
+        </button>
+    </form>
+
+    <a href="{% url 'catalogue:topic-list' %}">
+        Cancel
+    </a>
+{% endblock %}
