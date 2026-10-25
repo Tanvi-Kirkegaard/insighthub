@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (SurveyListView, SurveyCreateView, SurveyDetailView, SurveyUpdateView, SurveyDeleteView,
-                    QuestionCreateView, QuestionUpdateView, QuestionDeleteView)
+                    QuestionCreateView, QuestionUpdateView, QuestionDeleteView, ChoiceCreateView)
 
 app_name = 'surveys'
 
@@ -12,6 +12,6 @@ urlpatterns = [
     path("<int:pk>/delete/", SurveyDeleteView.as_view(), name="survey-delete"),
     path("questions/create/", QuestionCreateView.as_view(), name="question-create"),
     path("questions/<int:pk>/edit/", QuestionUpdateView.as_view(), name="question-update"),
-    path("questions/<int:pk>/delete/", QuestionDeleteView.as_view(), name="question-delete")
-
+    path("questions/<int:pk>/delete/", QuestionDeleteView.as_view(), name="question-delete"),
+    path("choices/create/", ChoiceCreateView.as_view(), name="choice-create"),
 ]

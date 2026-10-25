@@ -1,5 +1,5 @@
 from django import forms
-from .models import Survey, Question
+from .models import Survey, Question, Choice
 from django.utils import timezone
 
 class SurveyForm(forms.ModelForm):
@@ -59,6 +59,7 @@ class QuestionForm(forms.ModelForm):
             'survey',
             'text',
             'question_type',
+            'choices',
             'is_required',
             'order'
         ]
@@ -67,6 +68,7 @@ class QuestionForm(forms.ModelForm):
             'survey': 'Survey',
             'text': 'Question text',
             'question_type': 'Question type',
+            'choices': "Answer choices",
             'is_required': 'Required',
             'order': 'Display order',
         }
@@ -81,6 +83,7 @@ class QuestionForm(forms.ModelForm):
         widgets = {
             'text': forms.Textarea(attrs={'placeholder': 'Enter the question...', 'rows': 3}),
             'question_type': forms.Select(),
+            'choices': forms.CheckboxSelectMultiple(),
             'is_required': forms.CheckboxInput(),
             'order': forms.NumberInput(attrs={'min': 1}),
         }
@@ -91,5 +94,33 @@ class QuestionForm(forms.ModelForm):
         if len(text) < 10:
             raise forms.ValidationError(
                 "The question must contain at least 10 characters.")
+
+        return text
+
+
+class ChoiceForm(forms.ModelForm):
+    class Meta:
+        model = Choice
+        fields = [
+            "text",
+        ]
+        labels = {
+            "text": "Answer option",
+        }
+        widgets = {
+            "text": forms.TextInput(
+                attrs={
+                    "placeholder": "e.g. Very satisfied",
+                }
+            ),
+        }
+
+    def clean_text(self):
+        text = self.cleaned_data["text"].strip()
+
+        if len(text) < 2:
+            raise forms.ValidationError(
+                "The choice must contain at least 2 characters."
+            )
 
         return text

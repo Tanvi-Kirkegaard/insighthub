@@ -18,6 +18,15 @@
         {% csrf_token %}
         {{ form.as_p }}
 
+    <p>
+        Need another answer choice?
+        <a href="{% url 'surveys:choice-create' %}">Create one here</a>
+    </p>
+
+    <p>
+        Create reusable answer options for single-choice and multiple-choice questions.
+    </p>
+
         <button type="submit">
             {% if object %}
                 Save changes

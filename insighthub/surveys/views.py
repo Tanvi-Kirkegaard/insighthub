@@ -1,6 +1,6 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from .models import Survey, Question
-from .forms import SurveyForm, QuestionForm
+from .models import Survey, Question, Choice
+from .forms import SurveyForm, QuestionForm, ChoiceForm
 from django.urls import reverse_lazy
 
 class SurveyListView(ListView):
@@ -49,3 +49,12 @@ class QuestionDeleteView(DeleteView):
     template_name = 'surveys/question_confirm_delete.html'
     context_object_name = 'question'
     success_url = reverse_lazy('surveys:survey-list')
+
+
+class ChoiceCreateView(CreateView):
+    model = Choice
+    form_class = ChoiceForm
+    template_name = "surveys/choice_form.html"
+    success_url = reverse_lazy('surveys:question-create')
+
+

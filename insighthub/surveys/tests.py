@@ -3,7 +3,7 @@ from django.test import TestCase
 from datetime import timedelta, date
 from django.utils import timezone
 from catalogue.models import Topic
-from .models import Survey, Question
+from .models import Survey, Question, Choice
 from django.urls import reverse
 
 
@@ -277,3 +277,53 @@ class QuestionViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "How useful was this survey?")
+
+
+    def test_choice_creation(self):
+        response = self.client.post(
+            reverse("surveys:choice-create"),
+            {
+                "text": "Very satisfied"
+            }
+        )
+
+        self.assertEqual(Choice.objects.count(), 1)
+        self.assertEqual(
+            Choice.objects.get(text="Very satisfied").text,
+            "Very satisfied",
+        )
+        self.assertRedirects(
+            response,
+            reverse("surveys:question-create"),
+        )
+
+    def test_question_creation_with_choice(self):
+        choice_one = Choice.objects.create(
+            text="Very satisfied",
+        )
+
+        choice_two = Choice.objects.create(
+            text="Satisfied",
+        )
+
+        response = self.client.post(
+            reverse("surveys:question-create"),
+            {
+                "survey": self.survey.pk,
+                "text": "How satisfied are you with this survey?",
+                "question_type": Question.SINGLE_CHOICE,
+                "choices": [choice_one.pk, choice_two.pk],
+                "is_required": True,
+                "order": 1,
+            },
+        )
+        question = Question.objects.get(
+            text="How satisfied are you with this survey?")
+
+        self.assertEqual(question.choices.count(), 2)
+        self.assertIn(choice_one, question.choices.all())
+        self.assertIn(choice_two, question.choices.all())
+        self.assertRedirects(
+            response,
+            reverse("surveys:survey-list"),
+        )

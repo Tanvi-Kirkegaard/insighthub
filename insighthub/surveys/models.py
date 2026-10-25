@@ -17,6 +17,12 @@ class Survey(models.Model):
     def __str__(self):
         return self.title
 
+class Choice(models.Model):
+    text = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.text
+
 
 class Question(models.Model):
     TEXT = 'text'
@@ -41,6 +47,13 @@ class Question(models.Model):
         choices=QUESTION_TYPES,
         default=TEXT,
     )
+
+    choices = models.ManyToManyField(
+        Choice,
+        blank=True,
+        related_name='questions',
+    )
+
     is_required = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -50,5 +63,6 @@ class Question(models.Model):
 
     def __str__(self):
         return self.text
+
 
 

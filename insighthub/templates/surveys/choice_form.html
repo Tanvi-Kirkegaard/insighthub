@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Add Answer Option | InsightHub
+{% endblock %}
+
+{%  block content %}
+    <h1>Add an answer option</h1>
+    <p>
+        Add an answer option that can be reused by one or more choice-based questions.
+    </p>
+    <form method="post">
+        {%  csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add answer option</button>
+    </form>
+
+    <a href="{% url 'surveys:survey-list' %}">Cancel</a>
+
+{%  endblock %}
