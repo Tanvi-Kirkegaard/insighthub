@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}{{ survey.title }} | InsightHub{% endblock %}
+
+{% block content %}
+    <h1>{{ survey.title }}</h1>
+
+    <p>{{ survey.description }}</p>
+
+    <p>
+        <strong>Topic:</strong>
+        {{ survey.topic }}
+    </p>
+
+     <p>
+        <strong>Launch date:</strong>
+        {{ survey.launch_date }}
+    </p>
+
+    <p>
+        <strong>Expiration date:</strong>
+        {{ survey.expiration_date }}
+    </p>
+
+     <p>
+        <strong>Created:</strong>
+        {{ survey.create_date }}
+    </p>
+
+    <h2>Questions</h2>
+
+    <a href="{% url 'surveys:question-create' %}">Add question</a>
+
+    {% for question in survey.questions.all %}
+        <article>
+            <p>
+                {{ question.order }}
+                {{ question.text }}
+            </p>
+
+            <p>
+                Type: {{ question.get_question_type_display }}
+            </p>
+
+            <p>
+                Required:
+                {%  if question.required %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </p>
+
+            <a href="{% url 'surveys:question-update' question.pk %}">
+                Edit question
+            </a>
+
+            <a href="{% url 'surveys:question-delete' question.pk %}">
+                Delete question
+            </a>
+
+        </article>
+
+        {% empty %}
+            <p>No questions have been added yet.</p>
+    {% endfor %}
+
+
+    <a href="{% url 'surveys:survey-update' survey.pk %}">
+        Edit survey
+    </a>
+
+    <a href="{% url 'surveys:survey-delete' survey.pk %}">
+        Delete survey
+    </a>
+
+    <a href="{% url 'surveys:survey-list' %}">
+        Back to surveys
+    </a>
+{% endblock %}

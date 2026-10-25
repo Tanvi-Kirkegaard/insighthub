@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% if object %}
+        Edit Question | InsightHub
+    {% else %}
+        Create Question | InsightHub
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if object %}
+        <h1>Edit Question</h1>
+    {% else %}
+        <h1>Create Question</h1>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">
+            {% if object %}
+                Save changes
+            {% else %}
+                Create question
+            {% endif %}
+        </button>
+    </form>
+    <p>
+        <a href="{% url 'surveys:survey-list' %}">
+            Cancel
+        </a>
+{% endblock %}

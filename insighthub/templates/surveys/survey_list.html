@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Surveys | InsightHub{% endblock %}
+
+{% block content %}
+    <h1>Surveys</h1>
+    
+    <a href="{% url 'surveys:survey-create' %}">Create Survey</a>
+
+    {% for survey in surveys %}
+        <article>
+            <h2>
+                <a href="{% url 'surveys:survey-detail' survey.pk %}">
+                    {{ survey.title }}
+                </a>
+            </h2>
+
+            <p>{{ survey.description }}</p>
+
+            <p>Created on: {{ survey.created_at }}</p>
+
+            <p>
+                Available from: {{ survey.launch_date }}
+                to {{ survey.expiration_date }}
+            </p>
+        </article>
+    {% empty %}
+        <p>No surveys available yet.</p>
+    {% endfor %}
+{% endblock %}

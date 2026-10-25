@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Edit Survey{% else %}Create Survey{% endif %} | InsightHub
+{% endblock %}
+
+{% block content %}
+
+    {% if object %}
+        <h1>Edit Survey</h1>
+    {% else %}
+        <h1>Create Survey</h1>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit">
+            {% if object %}
+                Update Survey
+            {% else %}
+                Create Survey
+            {% endif %}
+        </button>
+    </form>
+    
+    {% if object %}
+        <a href="{% url 'surveys:survey-detail' object.pk %}">
+            Back to survey details
+        </a>
+    {% else %}
+        <a href="{% url 'surveys:survey-list' %}">
+            Back to surveys
+        </a>
+    {% endif %}
+{% endblock %}

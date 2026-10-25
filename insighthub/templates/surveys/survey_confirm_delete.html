@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Confirm Delete Survey | InsightHub
+{% endblock %}
+
+{% block content %}
+    <h1>Delete Survey</h1>
+
+    <p>
+        Are you sure you want to delete
+        <strong>{{ survey.title }}</strong>?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete Survey</button>
+    </form>
+
+    <a href="{% url 'surveys:survey-detail' survey.pk %}">
+        Cancel
+    </a>
+{% endblock %}

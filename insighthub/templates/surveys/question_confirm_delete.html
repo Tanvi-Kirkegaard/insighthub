@@ -1,0 +1,22 @@
+{%  extends 'base.html' %}
+
+{% block title %}
+    Delete question | InsideHub
+{%  endblock %}
+
+{% block content %}
+    <h1>Delete question</h1>
+
+    <p>
+        Are you sure you want to delete "{{ question.text }}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+
+    <a href="{% url 'surveys:survey-detail' question.survey.pk %}">
+       Cancel
+    </a>
+{% endblock %}

@@ -1,0 +1,51 @@
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from .models import Survey, Question
+from .forms import SurveyForm, QuestionForm
+from django.urls import reverse_lazy
+
+class SurveyListView(ListView):
+    model = Survey
+    template_name = 'surveys/survey_list.html'
+    context_object_name = 'surveys'
+
+class SurveyCreateView(CreateView):
+    model = Survey
+    form_class = SurveyForm
+    template_name = 'surveys/survey_form.html'
+    success_url = reverse_lazy('surveys:survey-list')
+
+class SurveyDetailView(DetailView):
+    model = Survey
+    template_name = 'surveys/survey_detail.html'
+    context_object_name = 'survey'
+
+class SurveyUpdateView(UpdateView):
+    model = Survey
+    form_class = SurveyForm
+    template_name = 'surveys/survey_form.html'
+    success_url = reverse_lazy('surveys:survey-list')
+
+class SurveyDeleteView(DeleteView):
+    model = Survey
+    template_name = 'surveys/survey_confirm_delete.html'
+    context_object_name = 'survey'
+    success_url = reverse_lazy('surveys:survey-list')
+
+
+class QuestionCreateView(CreateView):
+    model = Question
+    form_class = QuestionForm
+    template_name = 'surveys/question_form.html'
+    success_url = reverse_lazy('surveys:survey-list')
+
+class QuestionUpdateView(UpdateView):
+    model = Question
+    form_class = QuestionForm
+    template_name = 'surveys/question_form.html'
+    success_url = reverse_lazy('surveys:survey-list')
+
+class QuestionDeleteView(DeleteView):
+    model = Question
+    template_name = 'surveys/question_confirm_delete.html'
+    context_object_name = 'question'
+    success_url = reverse_lazy('surveys:survey-list')

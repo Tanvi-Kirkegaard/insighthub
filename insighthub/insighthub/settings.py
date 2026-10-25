@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 PROJECT_APPS = [
     'catalogue',
-    'core'
+    'core',
+    'surveys',
     ]
 
 INSTALLED_APPS = [
