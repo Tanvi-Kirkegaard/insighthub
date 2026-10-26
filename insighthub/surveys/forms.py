@@ -88,6 +88,12 @@ class QuestionForm(forms.ModelForm):
             'order': forms.NumberInput(attrs={'min': 1}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance.pk:
+            self.fields["survey"].disabled = True
+
     def clean_text(self):
         text = self.cleaned_data['text'].strip()
 

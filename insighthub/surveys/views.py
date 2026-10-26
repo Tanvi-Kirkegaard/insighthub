@@ -1,4 +1,6 @@
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+
+from catalogue.models import Topic
 from .models import Survey, Question, Choice
 from .forms import SurveyForm, QuestionForm, ChoiceForm
 from django.urls import reverse_lazy
@@ -7,6 +9,32 @@ class SurveyListView(ListView):
     model = Survey
     template_name = 'surveys/survey_list.html'
     context_object_name = 'surveys'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        topic = self.request.GET.get('topic')
+        sort = self.request.GET.get('sort')
+
+        if topic:
+            queryset = queryset.filter(topic_id=topic)
+
+        if sort == "launch":
+            queryset = queryset.order_by('launch_date')
+        elif sort == "expiration":
+            queryset = queryset.order_by('expiration_date')
+        elif sort == "newest":
+            queryset = queryset.order_by('-created_at')
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["topics"] = Topic.objects.all()
+        context["selected_topic"] = self.request.GET.get('topic', '')
+        context["selected_sort"] = self.request.GET.get('sort', '')
+        return context
+
 
 class SurveyCreateView(CreateView):
     model = Survey

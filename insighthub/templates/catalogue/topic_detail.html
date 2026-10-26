@@ -6,7 +6,7 @@
     <article>
         <h1>{{ topic.title }}</h1>
         <p>{{ topic.description }}</p>
-        <p>Created: {{ topic.created_at }}</p>
+        <p>Created: {{ topic.created_at|date:"d M Y" }}</p>
     </article>
 
     <a href="{% url 'catalogue:topic-update' topic.pk %}">

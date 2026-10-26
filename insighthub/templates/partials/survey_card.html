@@ -1,0 +1,37 @@
+{% load survey_tags %}
+
+<article>
+    <h2>
+        <a href="{% url 'surveys:survey-detail' survey.pk %}">
+            {{ survey.title }}
+        </a>
+    </h2>
+
+    <p>{{ survey.description|short_description }}</p>
+
+    <p>
+        <strong>Topic:</strong>
+            {{ survey.topic.title }}
+    </p>
+
+    <p>
+        <strong>Created on:</strong>
+            {{ survey.created_at|date:"d M Y" }}
+    </p>
+
+    <p>
+        <strong>Launch date:</strong>
+            {{ survey.launch_date|date:"d M Y" }}
+    </p>
+
+    <p>
+        <strong>Expiration date:</strong>
+            {{ survey.expiration_date|date:"d M Y" }}
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+            {{ survey|survey_status}}
+    </p>
+
+</article>

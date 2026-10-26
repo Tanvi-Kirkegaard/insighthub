@@ -4,27 +4,73 @@
 
 {% block content %}
     <h1>Surveys</h1>
-    
-    <a href="{% url 'surveys:survey-create' %}">Create Survey</a>
+
+    <p>
+        <a href="{% url 'surveys:survey-create' %}">Create Survey</a>
+    </p>
+
+    <form method="get">
+        <div>
+            <label for="topic">Filter by topic:</label>
+
+            <select name="topic" id="topic">
+                <option value ="">All topics</option>
+
+                {% for topic in topics %}
+                    <option value="{{ topic.pk }}"
+                        {% if selected_topic == topic.pk|stringformat:"s" %}selected{% endif %}>
+
+                        {{ topic.title }}
+
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="sort">Sort by:</label>
+
+            <select name="sort" id="sort">
+
+                <option value ="newest"
+                    {% if selected_sort == "newest" %}selected{% endif %}>
+                    Newest
+                </option>
+
+                <option value ="launch"
+                    {% if selected_sort == "launch" %}selected{% endif %}>
+                    Launch date
+                </option>
+
+                <option value ="expiration"
+                    {% if selected_sort == "expiration" %}selected{% endif %}>
+                    Expiration date
+                </option>
+            </select>
+        </div>
+
+        <a href="{% url 'surveys:survey-list' %}">Clear filters</a>
+    </form>
+
+    <hr>
 
     {% for survey in surveys %}
-        <article>
-            <h2>
-                <a href="{% url 'surveys:survey-detail' survey.pk %}">
-                    {{ survey.title }}
-                </a>
-            </h2>
-
-            <p>{{ survey.description }}</p>
-
-            <p>Created on: {{ survey.created_at }}</p>
-
-            <p>
-                Available from: {{ survey.launch_date }}
-                to {{ survey.expiration_date }}
-            </p>
-        </article>
+        {% include 'partials/survey_card.html' %}
     {% empty %}
         <p>No surveys available yet.</p>
     {% endfor %}
+
+    <script>
+        const topicSelect = document.getElementById("topic");
+        const sortSelect = document.getElementById("sort");
+
+        topicSelect.addEventListener("change", function () {
+            topicSelect.form.submit();
+        });
+
+        sortSelect.addEventListener("change", function () {
+            sortSelect.form.submit();
+        });
+    </script>
+
 {% endblock %}

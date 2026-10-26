@@ -14,22 +14,22 @@
 
      <p>
         <strong>Launch date:</strong>
-        {{ survey.launch_date }}
+        {{ survey.launch_date|date:"d M Y" }}
     </p>
 
     <p>
         <strong>Expiration date:</strong>
-        {{ survey.expiration_date }}
+        {{ survey.expiration_date|date:"d M Y" }}
     </p>
 
      <p>
         <strong>Created:</strong>
-        {{ survey.create_date }}
+        {{ survey.create_date|date:"d M Y" }}
     </p>
 
     <h2>Questions</h2>
 
-    <a href="{% url 'surveys:question-create' %}">Add question</a>
+    <a href="{% url 'surveys:question-create' survey.pk %}">Add question</a>
 
     {% for question in survey.questions.all %}
         <article>
