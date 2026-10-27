@@ -83,6 +83,5 @@ class ChoiceCreateView(CreateView):
     model = Choice
     form_class = ChoiceForm
     template_name = "surveys/choice_form.html"
-    success_url = reverse_lazy('surveys:question-create')
-
+    success_url = reverse_lazy('surveys:survey-list')
 

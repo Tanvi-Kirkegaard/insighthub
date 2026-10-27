@@ -167,7 +167,10 @@ class QuestionViewTests(TestCase):
 
     def test_question_creation(self):
         response = self.client.post(
-            reverse('surveys:question-create'),
+            reverse(
+                'surveys:question-create',
+                kwargs={'survey_pk': self.survey.pk},
+            ),
             {
                 "survey": self.survey.pk,
                 "text": "How useful was this survey?",
@@ -239,7 +242,10 @@ class QuestionViewTests(TestCase):
 
     def test_question_creation_rejects_short_text(self):
         response = self.client.post(
-            reverse("surveys:question-create"),
+            reverse(
+                "surveys:question-create",
+                kwargs={"survey_pk": self.survey.pk},
+            ),
             {
                 "survey": self.survey.pk,
                 "text": "Short",
@@ -294,7 +300,7 @@ class QuestionViewTests(TestCase):
         )
         self.assertRedirects(
             response,
-            reverse("surveys:question-create"),
+            reverse("surveys:survey-list"),
         )
 
     def test_question_creation_with_choice(self):
@@ -307,7 +313,10 @@ class QuestionViewTests(TestCase):
         )
 
         response = self.client.post(
-            reverse("surveys:question-create"),
+            reverse(
+                "surveys:question-create",
+                kwargs={"survey_pk": self.survey.pk},
+            ),
             {
                 "survey": self.survey.pk,
                 "text": "How satisfied are you with this survey?",

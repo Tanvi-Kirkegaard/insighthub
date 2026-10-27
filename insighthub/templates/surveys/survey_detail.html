@@ -29,7 +29,7 @@
 
     <h2>Questions</h2>
 
-    <a href="{% url 'surveys:question-create' survey.pk %}">Add question</a>
+    <a href="{% url 'surveys:question-create' survey.pk %}">+ Add question</a>
 
     {% for question in survey.questions.all %}
         <article>
@@ -66,15 +66,18 @@
     {% endfor %}
 
 
-    <a href="{% url 'surveys:survey-update' survey.pk %}">
+    <a class="btn-secondary"
+       href="{% url 'surveys:survey-update' survey.pk %}">
         Edit survey
     </a>
 
-    <a href="{% url 'surveys:survey-delete' survey.pk %}">
-        Delete survey
+    <a class="btn-danger"
+        href="{% url 'surveys:survey-delete' survey.pk %}">
+            Delete survey
     </a>
 
-    <a href="{% url 'surveys:survey-list' %}">
-        Back to surveys
+    <a class="btn-secondary"
+       href="{% url 'surveys:survey-list' %}">
+        <- Back to surveys
     </a>
 {% endblock %}

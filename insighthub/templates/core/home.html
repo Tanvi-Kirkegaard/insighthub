@@ -4,8 +4,10 @@
 
 {% block content %}
     <h1>Welcome to InsightHub</h1>
-    <p>Explore structured topics and contribute to meaningful insights.</p>
+    <p>Explore structured topics and contribute to meaningful insights.
+        Create your own customised surveys for your target audience.
+    </p>
 
-    <a href="{% url 'catalogue:topic-list' %}">
-        Browse topics</a>
+    <a class="btn-primary" href="{% url 'catalogue:topic-list' %}">
+        -> Browse Topics</a>
 {% endblock %}

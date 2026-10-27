@@ -13,7 +13,7 @@
 
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Delete</button>
+        <button class="btn-danger" type="submit">Delete</button>
     </form>
 
     <a href="{% url 'surveys:survey-detail' question.survey.pk %}">

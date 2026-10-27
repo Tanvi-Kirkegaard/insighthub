@@ -9,15 +9,21 @@
         <p>Created: {{ topic.created_at|date:"d M Y" }}</p>
     </article>
 
-    <a href="{% url 'catalogue:topic-update' topic.pk %}">
-        Edit Topic
-    </a>
+    <div class="actions">
+        <a class="btn-secondary"
+            href="{% url 'catalogue:topic-update' topic.pk %}">
+                Edit Topic
+        </a>
 
-    <a href="{% url 'catalogue:topic-delete' topic.pk %}">
-        Delete Topic
-    </a>
+        <a class="btn-danger"
+           href="{% url 'catalogue:topic-delete' topic.pk %}">
+                Delete Topic
+        </a>
 
-    <a href="{% url 'catalogue:topic-list' %}">
-        Back to topics
-    </a>
+        <a class="btn-secondary"
+            href="{% url 'catalogue:topic-list' %}">
+            <- Back to topics
+        </a>
+    </div>
+
 {% endblock %}
